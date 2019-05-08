@@ -1,16 +1,26 @@
-Quando('eu faço login com {string} e a senha {string}') do |email, senha|
-  visit 'http://mark7.herokuapp.com/login'
-  find('input[name=email]').set email
-  find('input[name=password]').set senha
-  click_button 'Login'
+
+Quando("acesso com o código {string} e login {string}") do |codigo, login|
+  visit "http://homologacao.tecnobank.com.br/Login"
+  find("input[id=txtCdEntidade]").set codigo
+  find("input[id=txtLogin]").set login
+  click_button "Entrar"
 end
 
-Então('devo ver a área loga com o texto {string}') do |ola|
-  painel = find('#task-board')
-  expect(painel.text).to have_content ola
+Quando("informo a senha {string} no teclado virtual") do |senha|
+  senha_digitos = senha.split(",")
+  senha_digitos.each { |numero| click_on numero }
+  find("#Body_btnEntrar").click
 end
 
-Então('devo ver uma mensagem de alerta {string}') do |mensagem|
-  alerta = find('.alert-login')
-  expect(alerta.text).to eql mensagem
+Então("devo ver a área logada com a mensagem {string}") do |mensagem_esperada|
+  sleep 3
+  page.execute_script("$('iframe').hide();") # isso aqui tira a caixinha de suporte
+
+  comunicados = find(".modal-body")
+  expect(comunicados).to have_text mensagem_esperada
+end
+
+Então("devo ver o popup de alerta {string}") do |mensagem_esperada|
+  popup = find("#wucMensagens1_lblCorpo")
+  expect(popup.text).to eql mensagem_esperada
 end

@@ -1,22 +1,33 @@
 #language: pt
 
 Funcionalidade: Login
-@sucesso
-Cenario: Login com sucesso
 
-    Quando eu faço login com "eu@papito.io" e a senha "123456"
-    Então devo ver a área loga com o texto "Olá, Fernando"
+    @login_sucesso
+    Cenario: Acesso do usuário
 
-    @tentativa
-    Esquema do Cenário: Login sem sucesso
+        Quando acesso com o código "1001" e login "rmendes"
+        E informo a senha "2,3,0,4,1,6" no teclado virtual
+        Então devo ver a área logada com a mensagem "Olá cliente"
 
-    Quando eu faço login com "<email>" e a senha "<senha>"
-    Então devo ver uma mensagem de alerta "<alerta>"
+    @login_validacao
+    Esquema do Cenário: Tentativa de acesso 
 
-    Exemplos: 
-    |email|senha|alerta|
-    |eu@papito.io|pto123|Senha incorreta|
-    |padre_kevedo@noekiste.com|pto123|Usuário não cadastrado.|
-    |eu*papito.io|pto123|Email incorreto ou ausente.|
+        Quando acesso com o código "<codigo>" e login "<login>"
+        Então devo ver o popup de alerta "<texto>"
 
+        Exemplos: 
+        |codigo |login          |texto                                                              |
+        |1001   |raquel_papini  |Usuário Inexistente. Contate o suporte para maiores informações.   |
+        |9999   |rmendes        |Código Inexistente. Contate o suporte para maiores informações.    |
 
+    @senha_validacao
+    Esquema do Cenário: Tentar logar com senha
+
+        Quando acesso com o código "1001" e login "rmendes"
+        E informo a senha "<senha>" no teclado virtual
+        Então devo ver o popup de alerta "<texto>"
+
+        Exemplos: 
+        |senha      |texto                                                       |
+        |1,2,3,4,5,6|Senha incorreta. Contate o suporte para maiores informações.|
+        |           |- Informe a Senha.                                          |
