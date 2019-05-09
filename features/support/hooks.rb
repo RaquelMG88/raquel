@@ -11,6 +11,10 @@ Before("@login") do
   senha_digitos.each { |numero| click_on numero }
 
   find("#Body_btnEntrar").click
+
+  sleep 3
+  page.execute_script("$('.bootbox-close-button').click();")
+  page.execute_script("$('iframe').hide();") # isso aqui tira a caixinha de suporte
 end
 
 After do

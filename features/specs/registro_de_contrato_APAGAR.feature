@@ -1,6 +1,19 @@
 #language: pt
 
 Funcionalidade: Inclusão de Registro de Contrato
+
+    Cenario: Novo contrato
+
+        Dado que o veículo é do estado "SP"
+        E o chassi é "STUCZHERXNFLFS"
+        Quando eu faço o registro do contrato
+        Então deve ser exibido a seguinte mensagem:
+        """
+        Estamos processando a operação solicitada. É importante que a janela do navegador não seja fechada ou atualizada até o final da operação.
+        """
+
+
+
 @inclusao @login
 Cenario: Inclusão com sucesso
 
